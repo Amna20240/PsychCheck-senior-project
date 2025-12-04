@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PsychCheck SPA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* =======================
+   PSYCHECK – CALMING BLUE PROFESSIONAL THEME
+   ======================= */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #DDEAF2; /* soft cloud blue */
+  margin: 0;
+  padding: 0;
+  color: #2E4057; /* deep blue-gray for text */
+}
+
+/* HEADER */
+header {
+  background: #8FB7D0; /* calm sky blue */
+  color: white;
+  padding: 1.5em;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #B6D1E3;
+}
+
+/* NAVIGATION */
+nav {
+  background: #A5C5DA; /* lighter sky tone */
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-bottom: 1px solid #B6D1E3;
+}
+nav button {
+  background: none;
+  border: 1px solid #8FB7D0;
+  color: #2E4057;
+  font-weight: 600;
+  margin: 0 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.25s;
+  border-radius: 6px;
+  padding: 8px 14px;
+}
+nav button:hover {
+  color: white;
+  background: #6EA4C8;
+}
+
+/* MAIN CONTAINERS */
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #F5FAFC; /* clean soft white-blue */
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+  border: 1px solid #B6D1E3;
+}
+
+/* HEADINGS */
+h2 {
+  color: #4F7EA8;
+}
+
+/* INPUTS */
+input, button, select, label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #B6D1E3;
+  background-color: white;
+  color: #2E4057;
+  transition: 0.2s;
+}
+input:focus, select:focus {
+  border-color: #6EA4C8;
+  outline: none;
+}
+
+/* BUTTONS */
+button {
+  padding: 12px 25px;
+  background: #8FB7D0;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: 0.25s;
+  border: none;
+}
+button:hover {
+  background: #6EA4C8;
+  transform: scale(1.03);
+}
+
+/* PROGRESS */
+#progress, #phq-progress {
+  font-size: 14px;
+  color: #4F7EA8;
+  margin-bottom: 12px;
+}
+
+/* ANSWER BUTTONS */
+button.answer {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  background: #E4F0F7;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: left;
+  color: #2E4057;
+  border: 1px solid #B6D1E3;
+}
+button.answer:hover {
+  background: #C8E1F0;
+}
+
+/* NEXT BUTTONS */
+#next, #phq-next {
+  margin-top: 24px;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  background: #8FB7D0;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.85;
+  font-weight: bold;
+  transition: 0.3s;
+  border: none;
+}
+#next.enabled, #phq-next.enabled { opacity: 1; }
+#next:hover, #phq-next:hover { background: #6EA4C8; }
+
+/* STATUS & ERRORS */
+.save-status {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #2E4057;
+}
+.error {
+  color: #C94F4F;
+  font-size: 0.9rem;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+/* CHAT WINDOW */
+#chatWindow {
+  height: 260px;
+  overflow: auto;
+  border: 1px solid #B6D1E3;
+  border-radius: 12px;
+  padding: 12px;
+  background: #E9F3F8;
+}
+/* Hidden */
+.hidden { display: none; }
+
+/* Base state (unselected) */
+button.answer {
+  background: #f5faff;             
+  border: 1.5px solid #d0e4fa;      
+  color: #2a3a47;                   
+  border-radius: 10px;
+  padding: 14px;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease-in-out;
+}
+
+/* Hover effect */
+button.answer:hover {
+  background: #dceefd;
+  border-color: #bcdfff;
+  transform: translateY(-2px);
+}
+
+/* Selected answer (peaceful pastel blue) */
+button.answer.selected {
+  background: #bcdfff;              
+  border-color: #9acaf7;            
+  color: #1e2f45;
+  font-weight: 600;
+  transform: translateY(-2px);
+  box-shadow: 0 0 8px rgba(156,202,247,0.4);
+}
+
+/* Remove focus flash */
+button.answer:focus,
+button.answer:active {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(156,202,247,0.2);
+}
+
+/* Next buttons */
+#next, #phq-next {
+  background: #8cc5ff;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+#next:hover, #phq-next:hover {
+  background: #73b3f8;
+  transform: scale(1.03);
+}
+
+
+
+#chatWindow {
+  border: 1.5px solid #cde4ff !important;   
+  background: #f7fbff !important;           
+}
+
+/* Bot messages – soft blue instead of green */
+#chatWindow .bot div {
+  background: #eaf4fb !important;           
+  color: #1e2f45 !important;                
+  border-radius: 10px 10px 10px 0;
+  display: inline-block;
+  padding: 10px 12px;
+  margin: 6px 0;
+  box-shadow: 0 2px 6px rgba(200,220,240,0.25);
+}
+
+
+/* Chat window container */
+#chatWindow {
+  background: #f7fbff !important;          
+  border: 1.5px solid #cde4ff !important;  
+  border-radius: 12px !important;
+  padding: 12px !important;
+  height: 260px !important;
+  overflow: auto !important;
+}
+
+
+#chatWindow .you div {
+  background: #bcdfff !important;          
+  color: #1e2f45 !important;               
+  border-radius: 10px 10px 0 10px !important;
+  display: inline-block !important;
+  padding: 10px 12px !important;
+  margin: 6px 0 !important;
+  box-shadow: 0 2px 6px rgba(156,202,247,0.3) !important;
+}
+
+
+#chatWindow .bot div {
+  background: #eaf4fb !important;          
+  color: #2a3a47 !important;               
+  border-radius: 10px 10px 10px 0 !important;
+  display: inline-block !important;
+  padding: 10px 12px !important;
+  margin: 6px 0 !important;
+  box-shadow: 0 2px 6px rgba(200,220,240,0.25) !important;
+}
+
+
+#chatInput {
+  flex: 1 !important;
+  padding: 12px !important;
+  border: 1.5px solid #cde4ff !important; 
+  border-radius: 8px !important;
+  background: #f9fcff !important;        
+  font-size: 1rem !important;
+  transition: all 0.2s ease-in-out !important;
+  color: #1e2f45 !important;
+}
+#chatInput:focus {
+  border-color: #8cc5ff !important;
+  box-shadow: 0 0 6px rgba(140,197,255,0.4) !important;
+  outline: none !important;
+}
+
+
+#chatSend {
+  padding: 12px 18px !important;
+  border-radius: 8px !important;
+  background: #8cc5ff !important;         
+  color: white !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease-in-out !important;
+}
+#chatSend:hover {
+  background: #73b3f8 !important;
+  transform: scale(1.03) !important;
+}
+
+/* === AI Prediction Form Styling === */
+#aiAnxietyPrediction, #aiDepressionPrediction {
+  padding: 30px;
+  background: #f6faff;
+  border-radius: 12px;
+  margin-top: 40px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.question-block {
+  margin-bottom: 25px;
+}
+
+.question-block label {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.question-block textarea {
+  width: 100%;
+  min-height: 90px;
+  border: 1.5px solid #a7c7e7;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.question-block textarea:focus {
+  border-color: #4a90e2;
+  background: #f0f8ff;
+}
+
+#aiResultCard {
+  display: none;
+  margin-top: 20px;
+  background: #eaf6ff;
+  border-left: 6px solid #4a90e2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  color: #2c3e50;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+  </style>
+</head>
+<body>
+
+<header><h1>PsychCheck</h1></header>
+
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('login')">Login</button>
+  <button onclick="showPage('signup')">Sign Up</button>
+  <button onclick="showPage('about')">About</button>
+  <!-- Doctors removed from navigation as requested -->
+  <button onclick="showPage('chat')">Chat</button>
+</nav>
+
+<!-- HOME PAGE -->
+
+  <div id="home" class="container">
+  <h2>Welcome to PsychCheck</h2>
+
+  <!-- ✅ USER PROFILE CARD -->
+  <div id="user-profile-card"
+       style="display:none;
+              background:#eaf6ff;
+              border:1.5px solid #a7c7e7;
+              border-radius:10px;
+              padding:12px 18px;
+              margin:15px 0;
+              font-size:0.95rem;
+              color:#1e2f45;
+              box-shadow:0 2px 6px rgba(0,0,0,0.05);
+              text-align:left;">
+    <p style="margin:4px 0;">
+       <strong id="profile-name"></strong><br>
+       <span id="profile-age"></span> years old<br>
+       <span id="profile-email"></span>
+    </p>
+   
+  </div>
+
+  <!-- ✅ MAIN HOME CONTENT -->
+  <div id="home-content">
+    <p>
+      PsychCheck is a safe and supportive space where you can explore your mental health.  
+      Our tools focus on <strong>anxiety</strong> and <strong>depression</strong>, offering quick self-assessments 
+      and resources to help you take the first step towards wellness.  
+      Remember: this is a <em>self-assessment tool</em>, not a diagnosis.
+    </p>
+
+    
+
+  <blockquote style="font-style:italic; color:#1a75ff; margin:20px 0; border-left:4px solid #3399ff; padding-left:12px;">
+    "Your mental health is just as important as your physical health."
+  </blockquote>
+
+  <div style="margin:25px 0;">
+    <h3>Explore Assessment Options</h3>
+
+    <div style="margin-top:15px;">
+      <button onclick="showPage('testSelect')">Data-Based Self-Assessment</button>
+      <p style="max-width:600px; margin:auto; color:#555;">
+        Use clinically validated questionnaires (GAD-7 for anxiety and PHQ-9 for depression) 
+        to measure your current mental-health level.
+      </p>
+    </div>
+
+    <div style="margin-top:25px;">
+      <button onclick="showPage('aiPredictionIntro')">AI-Based Emotional Analysis</button>
+      <p style="max-width:600px; margin:auto; color:#555;">
+        Let our AI analyze your reflections in real-time to identify emotional patterns such as anxiety, 
+        stress, or low mood. This option provides instant feedback based on your written answers.
+      </p>
+    </div>
+  </div>
+ 
+
+    <!-- === IMMEDIATE HELP SECTION (LEFT-ALIGNED, SAME PAGE) === -->
+  <div style="margin-top:40px; text-align:left; color:#003366; max-width:700px; margin-left:auto; margin-right:auto;">
+    <h3 style="color:#1a75ff; margin-bottom:10px;">Need Immediate Help?</h3>
+
+    <p><strong>UAE Mental Health Hotline:</strong> 8004673</p>
+
+    <p>
+      <a href="https://www.mohap.gov.ae" target="_blank" style="color:#3399ff; text-decoration:none;">
+        UAE Ministry of Health & Prevention
+      </a><br>
+      <a href="https://www.who.int" target="_blank" style="color:#3399ff; text-decoration:none;">
+        World Health Organization – Mental Health
+      </a><br>
+      <a href="https://www.mentalhealth.gov" target="_blank" style="color:#3399ff; text-decoration:none;">
+        US MentalHealth.gov
+      </a>
+    </p>
+
+    <p style="margin-top:10px;">
+      <strong>Toll-Free Mental Health Support (UAE):</strong> 8004673
+    </p>
+
+    <button 
+      onclick="showPage('login')" 
+      style="
+        background:#ff4d4d;
+        color:white;
+        border:none;
+        border-radius:8px;
+        padding:10px 20px;
+        cursor:pointer;
+        font-weight:bold;
+        margin-top:15px;
+      ">
+      Sign Off
+    </button>
+  </div>
+</div>
+
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="container hidden">
+  <h2>Create Account</h2>
+  <form id="signupForm">
+  <input type="text" id="signup-name" placeholder="Full Name" required />
+
+  
+  <label for="signup-dob" style="font-weight:600;">Date of Birth:</label>
+  <input type="date" id="signup-dob" required style="display:block;width:100%;padding:12px;margin:10px 0;border-radius:8px;border:1px solid #B6D1E3;background:white;color:#2E4057;" />
+
+  <input type="tel" id="signup-phone" placeholder="Phone Number" required />
+  <input type="email" id="signup-email" placeholder="Email Address" required />
+  <input type="password" id="signup-password" placeholder="Password (min 6 chars)" minlength="6" required />
+  <button type="submit">Register</button>
+</form>
+
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="container hidden">
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="email" id="login-email" placeholder="Email address" required />
+    <input type="password" id="login-password" placeholder="Password" minlength="6" required />
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<!-- SELF-ASSESSMENT SELECTION -->
+<div id="testSelect" class="container hidden">
+  <h2>Data-Based Self-Assessment</h2>
+  <p>Use clinically validated questionnaires to understand your mental health status.</p>
+
+  <div style="margin-top: 20px;">
+    <button onclick="showPage('diagnosis')">Anxiety Assessment (GAD-7)</button>
+    <button onclick="showPage('depression')">Depression Assessment (PHQ-9)</button>
+  </div>
+</div>
+
+
+<!-- AI PREDICTION CHOICE PAGE -->
+<div id="aiPredictionChoice" class="container hidden">
+  <h2>AI Prediction</h2>
+  <p>Our AI assistant will analyze your responses and estimate your likelihood of anxiety or depression.</p>
+  <p>Please log in before starting your prediction.</p>
+
+  <button onclick="checkLoginAndContinue('aiPrediction')">Proceed to AI Prediction</button>
+  <button onclick="showPage('home')" style="background:#ccc; color:#0066cc;">Back to Home</button>
+</div>
+
+
+<!-- ANXIETY ASSESSMENT SELECTION -->
+<div id="anxietyChoice" class="container hidden">
+  <h2>Anxiety Assessments</h2>
+  <p>Select your preferred assessment method below:</p>
+
+  <div style="margin-top: 20px;">
+    <button onclick="showPage('diagnosis')">Data-Based GAD-7 Test</button>
+    <button onclick="showPage('aiAnxietyPrediction')">AI-Based Emotional Analysis</button>
+  </div>
+</div>
+
+
+
+
+<!-- DEPRESSION ASSESSMENT SELECTION -->
+<div id="depressionChoice" class="container hidden">
+  <h2>Depression Assessments</h2>
+  <p>Select your preferred assessment method below:</p>
+
+  <div style="margin-top: 20px;">
+    <button onclick="showPage('depression')">Data-Based PHQ-9 Test</button>
+    <button onclick="showPage('aiDepressionPrediction')">AI-Based Emotional Analysis</button>
+  </div>
+</div>
+
+
+
+<!-- ANXIETY TEST: GAD-7 -->
+<div id="diagnosis" class="container hidden">
+  <h2>GAD-7 Anxiety Test</h2>
+  <div id="progress"></div>
+  <h3 id="qText"></h3>
+  <div id="aWrap"></div>
+  <button id="next" disabled>Next</button>
+  <div id="gadSave" class="save-status"></div>
+</div>
+
+<!-- DEPRESSION TEST: PHQ-9 -->
+<div id="depression" class="container hidden">
+  <h2>PHQ-9 Depression Test</h2>
+  <div id="phq-progress"></div>
+  <h3 id="phq-qText"></h3>
+  <div id="phq-aWrap"></div>
+  <button id="phq-next" disabled>Next</button>
+  <div id="phqSave" class="save-status"></div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="container hidden">
+  <h2>About PsychCheck</h2>
+  <p>PsychCheck is a self-assessment platform for mental health..</p>
+</div>
+
+<!-- CHAT PAGE -->
+<div id="chat" class="container hidden">
+  <h2>PsychCheck Chat</h2>
+  <p>Ask me.</p>
+
+  <div id="chatWindow" style="height:260px; overflow:auto; border:2px solid #000; border-radius:12px; padding:12px; background:#f7fbff;"></div>
+
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <input id="chatInput" type="text" placeholder="Type your question…" style="flex:1; padding:12px; border:2px solid #000; border-radius:8px;">
+    <button id="chatSend" style="padding:12px 18px;">Send</button>
+  </div>
+</div>
+
+
+<!-- PAYMENT PAGE -->
+<div id="payment" class="container hidden">
+  <h2>Payment</h2>
+  <p>Please complete payment before viewing your results.</p>
+  <form id="paymentForm">
+    <input type="text" id="card-name" placeholder="Cardholder Name" required />
+    <div id="error-name" class="error"></div>
+    <input type="text" id="card-number" placeholder="Card Number" maxlength="16" required />
+    <div id="error-number" class="error"></div>
+    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required />
+    <div id="error-expiry" class="error"></div>
+    <input type="text" id="card-cvv" placeholder="CVV" maxlength="4" required />
+    <div id="error-cvv" class="error"></div>
+    <button type="submit">Pay Now</button>
+  </form>
+</div>
+
+<!-- DISORDER INFO PAGE -->
+<div id="disorderInfo" class="container hidden">
+  <h2 id="disorderTitle"></h2>
+  <p id="disorderDesc"></p>
+  <h3>Symptoms</h3><ul id="disorderSymptoms"></ul>
+  <h3>Causes</h3><ul id="disorderCauses"></ul>
+  <h3>Coping & Treatment</h3><ul id="disorderCoping"></ul>
+  <!-- Continue goes to recommendation first -->
+  <button onclick="showPage('recommendation')">Continue</button>
+</div>
+
+<!-- RECOMMENDATION PAGE -->
+<div id="recommendation" class="container hidden">
+  <h2>Need Recommendations?</h2>
+  <p>Would you like PsychCheck to recommend a suitable counselor or doctor for you?</p>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <button onclick="showPage('doctorConnect')">Yes, recommend</button>
+    <button onclick="showPage('home')">No, take me back</button>
+  </div>
+</div>
+
+<!-- DOCTOR CONNECTION PAGE -->
+<div id="doctorConnect" class="container hidden">
+  <h2>Doctor Recommendations</h2>
+  <p id="doctorIntro"></p>
+  <form id="doctorForm">
+    <select id="doctor-select" required>
+      <option value="">Select Doctor</option>
+      <option value="Dr. Ali – Psychiatrist">Dr. Ali – Psychiatrist</option>
+      <option value="Dr. Sara – Clinical Psychologist">Dr. Sara – Clinical Psychologist</option>
+      <option value="Dr. Abdirahman – Counselor">Dr. Abdirahman – Counselor</option>
+    </select>
+    <!-- Booking type added -->
+    <select id="booking-type" required>
+      <option value="">Select Session Type</option>
+      <option value="online">Online (Google Meet)</option>
+      <option value="face">Face-to-Face</option>
+    </select>
+    <input type="date" id="session-date" required />
+    <input type="time" id="session-time" required />
+    <button type="submit">Book Session</button>
+  </form>
+  <div id="doctorConfirmation" class="save-status"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwM6loYV7BQ_vmsjh-JAm6xgfcsWAEYjY",
+    authDomain: "psych-check-176e7.firebaseapp.com",
+    projectId: "psych-check-176e7",
+    storageBucket: "psych-check-176e7.appspot.com",
+    messagingSenderId: "736913703429",
+    appId: "1:736913703429:web:29e9a6a0153366b9f3126c",
+    measurementId: "G-9M8R6D5ZCG"
+    
+  };
+  // === LOGIN CHECK FUNCTION ===
+// Used when user tries to access AI Prediction without being logged in
+window.checkLoginAndContinue = function(targetPage) {
+  const user = JSON.parse(localStorage.getItem('psych_user'));
+  if (!user) {
+    alert("Please log in first.");
+    showPage('login');
+  } else {
+    showPage(targetPage);
+  }
+};
+
+
+  
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const auth = getAuth(app);
+  await signInAnonymously(auth);
+
+  // ---------- Navigation ----------
+  window.showPage = function showPage(pageId) {
+    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+    document.getElementById(pageId).classList.remove('hidden');
+    if (pageId === 'diagnosis') render(0);
+    if (pageId === 'depression') renderPHQ(0);
+    if (pageId === 'doctorConnect' && window.pendingResult) {
+      const r = window.pendingResult.calc();
+      document.getElementById('doctorIntro').textContent = 
+        window.pendingResult.type==="GAD7" ? 
+        `Based on your Anxiety result (${r.band}), we recommend a Clinical Psychologist.` :
+        `Based on your Depression result (${r.band}), we recommend a Counselor or Psychiatrist.`;
+    }
+  };
+
+
+
+  
+
+  // ---------- Auth forms ----------
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const name = document.getElementById('signup-name').value.trim();
+  const dob = document.getElementById('signup-dob').value;
+  const phone = document.getElementById('signup-phone').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+
+  // ✅ Validation checks
+  if (!name) {
+    alert("⚠️ Please enter your full name.");
+    return;
+  }
+  if (!dob) {
+    alert("⚠️ Please select your Date of Birth before signing up.");
+    return;
+  }
+  if (!phone) {
+    alert("⚠️ Please enter your phone number.");
+    return;
+  }
+  if (!email) {
+    alert("⚠️ Please enter a valid email address.");
+    return;
+  }
+  if (password.length < 6) {
+    alert("⚠️ Password must be at least 6 characters long.");
+    return;
+  }
+
+  // ✅ Compute age safely
+  const age = computeAge(dob);
+  if (age <= 0 || age > 120) {
+    alert("⚠️ Please enter a valid Date of Birth.");
+    return;
+  }
+
+  // ✅ Save full user record
+  const user = { name, dob, age, phone, email, password };
+  localStorage.setItem('psych_user', JSON.stringify(user));
+
+  alert(`✅ Account created successfully!\nWelcome, ${name}!`);
+  this.reset();
+  showPage('login');
+});
+
+
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const storedUser = JSON.parse(localStorage.getItem('psych_user'));
+  if (storedUser && email === storedUser.email && password === storedUser.password) {
+  alert(`Welcome back, ${storedUser.name}!`);
+  const age = computeAge(storedUser.dob);
+
+  // Fill the profile card
+  document.getElementById('profile-name').textContent = storedUser.name;
+  document.getElementById('profile-age').textContent = age;
+  document.getElementById('profile-email').textContent = storedUser.email;
+  document.getElementById('user-profile-card').style.display = 'block';
+
+  // Ensure Home page becomes visible
+  const allSections = document.querySelectorAll('.container');
+  allSections.forEach(div => div.classList.add('hidden'));
+  document.getElementById('home').classList.remove('hidden');
+}
+else {
+  alert("Invalid email or password. Please try again.");
+}
+
+});
+
+// ✅ LOGOUT FUNCTION
+window.logoutUser = function(){
+  if(confirm("Are you sure you want to log out?")){
+    localStorage.removeItem('psych_user');
+    document.getElementById('user-profile-card').style.display = 'none';
+    alert("You’ve been logged out successfully.");
+    showPage('login');
+  }
+};
+
+
+  function computeAge(dobStr) {
+    if (!dobStr) return null;
+    const dob = new Date(dobStr);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    return age;
+  }
+
+  function getCurrentUserInfo() {
+    const u = JSON.parse(localStorage.getItem('psych_user') || 'null');
+    if (!u) return { name: "Anonymous", dob: null, age: null, phone: "", email: "" };
+    return {
+      name: u.name || "Anonymous",
+      dob: u.dob || null,
+      age: computeAge(u.dob),
+      phone: u.phone || "",
+      email: u.email || ""
+    };
+  }
+
+  // ---------- Save functions ----------
+ async function saveGAD7(total, band) {
+  const u = getCurrentUserInfo();
+
+  // ✅ Prevent saving empty user data
+  if (!u.name || !u.email) {
+    alert(" Please log in before saving your test results.");
+    return;
+  }
+
+  await addDoc(collection(db, "results"), {
+    type: "GAD7",
+    name: u.name, dob: u.dob, age: u.age, phone: u.phone, email: u.email,
+    score: total, level: band, createdAt: serverTimestamp()
+  });
+}
+
+
+  async function savePHQ9(total, band, difficulty) {
+  const u = getCurrentUserInfo();
+
+  // ✅ Prevent saving empty user data
+  if (!u.name || !u.email) {
+    alert(" Please log in before saving your test results.");
+    return;
+  }
+
+  await addDoc(collection(db, "results"), {
+    type: "PHQ9",
+    name: u.name, dob: u.dob, age: u.age, phone: u.phone, email: u.email,
+    score: total, level: band, difficulty, createdAt: serverTimestamp()
+  });
+}
+
+
+  // NEW: Save AI tests to two different collections
+  async function saveAIAnxiety(payload, result) {
+  const u = getCurrentUserInfo();
+
+  // ✅ Stop saving if user isn’t logged in
+  if (!u.name || !u.email) {
+    alert(" Please log in before taking the AI Anxiety test.");
+    return;
+  }
+
+  await addDoc(collection(db, "ai_anxiety"), {
+    type: "AI_Anxiety",
+    name: u.name,
+    dob: u.dob,
+    age: u.age,
+    phone: u.phone,
+    email: u.email,
+    responses: payload,
+    prediction: result.prediction,
+    confidence: result.confidence,
+    note: result.note,
+    createdAt: serverTimestamp()
+  });
+}
+
+  async function saveAIDepression(payload, result) {
+  const u = getCurrentUserInfo();
+
+  // ✅ Stop saving if user isn’t logged in
+  if (!u.name || !u.email) {
+    alert(" Please log in before taking the AI Depression test.");
+    return;
+  }
+
+  await addDoc(collection(db, "ai_depression"), {
+    type: "AI_Depression",
+    name: u.name,
+    dob: u.dob,
+    age: u.age,
+    phone: u.phone,
+    email: u.email,
+    responses: payload,
+    prediction: result.prediction,
+    confidence: result.confidence,
+    note: result.note,
+    createdAt: serverTimestamp()
+  });
+}
+
+
+  // ---------- GAD-7 ----------
+  const questions = [
+    "Feeling nervous, anxious, or on edge?",
+    "Not being able to stop or control worrying?",
+    "Worrying too much about different things?",
+    "Trouble relaxing?",
+    "Being so restless that it is hard to sit still?",
+    "Becoming easily annoyed or irritable?",
+    "Feeling afraid, as if something awful might happen?"
+  ];
+  const labels = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
+  let step = 0;
+  const answers = Array(7).fill(null);
+  const qEl   = document.getElementById("qText");
+  const aWrap = document.getElementById("aWrap");
+  const next  = document.getElementById("next");
+  const prog  = document.getElementById("progress");
+  const gadSave = document.getElementById('gadSave');
+
+  function render(i){
+    step = i;
+    prog.textContent = `Question ${i+1} of 7`;
+    qEl.textContent = questions[i];
+    aWrap.innerHTML = "";
+    next.disabled = true;
+    next.classList.remove("enabled");
+    gadSave.textContent = "";
+
+    labels.forEach((lab,val)=>{
+      const b = document.createElement("button");
+      b.textContent = lab;
+      b.className = "answer";
+      b.onclick = ()=>choose(val,b);
+      aWrap.appendChild(b);
+    });
+  }
+  function choose(val,btn){
+    answers[step]=val;
+    document.querySelectorAll("#diagnosis .answer").forEach(b=>b.style.background="#cce7ff");
+    btn.style.background="#3399ff";
+    next.disabled=false;
+    next.classList.add("enabled");
+  }
+  next.onclick = async ()=>{
+    if(++step < questions.length) {
+      render(step);
+    } else {
+      const total = answers.reduce((sum,val)=>sum+val,0);
+      const band  = total<=4 ? "No anxiety"
+                  : total<=9 ? "Mild anxiety"
+                  : total<=14 ? "Moderate anxiety"
+                  : "Severe anxiety";
+      window.pendingResult = {
+        type:"GAD7",
+        calc:()=>({total,band})
+      };
+      showPage('payment');
+      try { 
+        await saveGAD7(total, band);
+        gadSave.textContent = "Saved ✓";
+        gadSave.style.color = "green";
+      } catch(e){ 
+        console.error(e); 
+        gadSave.textContent = "Save failed";
+        gadSave.style.color = "red";
+      }
+    }
+  };
+
+  // ---------- PHQ-9 ----------
+  const phqQuestions = [
+    "Little interest or pleasure in doing things?",
+    "Feeling down, depressed, or hopeless?",
+    "Trouble falling asleep, staying asleep, or sleeping too much?",
+    "Feeling tired or having little energy?",
+    "Poor appetite or overeating?",
+    "Feeling bad about yourself?",
+    "Trouble concentrating?",
+    "Moving or speaking slowly or restlessly?",
+    "Thoughts about death or self-harm?",
+    "How difficult have these problems made daily life?"
+  ];
+  let phqStep=0;
+  const phqAnswers=Array(10).fill(null);
+  const phqQ=document.getElementById("phq-qText");
+  const phqWrap=document.getElementById("phq-aWrap");
+  const phqNext=document.getElementById("phq-next");
+  const phqProg=document.getElementById("phq-progress");
+  const diffLabels=["Not difficult","Somewhat difficult","Very difficult","Extremely difficult"];
+  const phqSave = document.getElementById('phqSave');
+
+  function renderPHQ(i){
+    phqStep=i;
+    phqProg.textContent=`Question ${i+1} of 10`;
+    phqQ.textContent=phqQuestions[i];
+    phqWrap.innerHTML="";
+    phqNext.disabled=true;
+    phqNext.classList.remove("enabled");
+    phqSave.textContent = "";
+
+    const btnLabels=(i<9)?labels:diffLabels;
+    btnLabels.forEach((lab,val)=>{
+      const b=document.createElement("button");
+      b.textContent=lab;
+      b.className="answer";
+      b.onclick=()=>{
+        phqAnswers[phqStep]=val;
+        document.querySelectorAll("#depression .answer").forEach(x=>x.style.background="#cce7ff");
+        b.style.background="#3399ff";
+        phqNext.disabled=false;
+        phqNext.classList.add("enabled");
+      };
+      phqWrap.appendChild(b);
+    });
+  }
+  phqNext.onclick= async ()=>{
+    if(++phqStep < phqQuestions.length) {
+      renderPHQ(phqStep);
+    } else {
+      const total=phqAnswers.slice(0,9).reduce((s,v)=>s+v,0);
+      const diff=phqAnswers[9];
+      const band= total<=4 ? "Minimal"
+               : total<=9 ? "Mild"
+               : total<=14 ? "Moderate"
+               : total<=19 ? "Moderately severe"
+               : "Severe";
+      window.pendingResult = {
+        type:"PHQ9",
+        calc:()=>({total,band,diff})
+      };
+      showPage('payment');
+      try { 
+        await savePHQ9(total, band, diffLabels[diff]); 
+        phqSave.textContent = "Saved ✓";
+        phqSave.style.color = "green";
+      } catch(e){ 
+        console.error(e); 
+        phqSave.textContent = "Save failed";
+        phqSave.style.color = "red";
+      }
+    }
+  };
+
+  // ---------- PAYMENT VALIDATION ----------
+  document.getElementById('paymentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // Clear old errors
+    ["error-name","error-number","error-expiry","error-cvv"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = "";
+    });
+
+    let valid = true;
+    const name = document.getElementById('card-name').value.trim();
+    const number = document.getElementById('card-number').value.trim();
+    const expiry = document.getElementById('card-expiry').value.trim();
+    const cvv = document.getElementById('card-cvv').value.trim();
+
+    // Name: at least 2 words
+    if(!/^[A-Za-z]+(?:\s+[A-Za-z]+)+$/.test(name)){
+      document.getElementById('error-name').textContent = "Please enter full name (first and last).";
+      valid = false;
+    }
+    // Card number: 16 digits
+    if(!/^\d{16}$/.test(number)){
+      document.getElementById('error-number').textContent = "Card number must be 16 digits.";
+      valid = false;
+    }
+    // Expiry: MM/YY and not expired
+    if(!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)){
+      document.getElementById('error-expiry').textContent = "Use MM/YY format.";
+      valid = false;
+    } else {
+      const [mm,yy] = expiry.split('/');
+      const expEnd = new Date(2000 + parseInt(yy,10), parseInt(mm,10), 0, 23, 59, 59, 999);
+      const now = new Date();
+      if(expEnd < now){
+        document.getElementById('error-expiry').textContent = "Card is expired.";
+        valid = false;
+      }
+    }
+    // CVV: 3-4 digits
+    if(!/^\d{3,4}$/.test(cvv)){
+      document.getElementById('error-cvv').textContent = "CVV must be 3 or 4 digits.";
+      valid = false;
+    }
+
+    if(!valid) return;
+
+    alert("✅ Payment successful!");
+    const r = window.pendingResult && window.pendingResult.calc ? window.pendingResult.calc() : { total: 0, band: "-" };
+
+    if(window.pendingResult && window.pendingResult.type==="GAD7"){
+      document.getElementById('disorderTitle').textContent = "Generalized Anxiety Disorder";
+      document.getElementById('disorderDesc').textContent = `Your score: ${r.total} → ${r.band}`;
+      document.getElementById('disorderSymptoms').innerHTML = "<li>Excessive worry</li><li>Restlessness</li><li>Trouble sleeping</li>";
+      document.getElementById('disorderCauses').innerHTML = "<li>Stress</li><li>Genetics</li><li>Brain chemistry</li>";
+      document.getElementById('disorderCoping').innerHTML = "<li>Therapy</li><li>Relaxation</li><li>Healthy lifestyle</li>";
+    } else {
+      document.getElementById('disorderTitle').textContent = "Depression";
+      document.getElementById('disorderDesc').textContent = `Your score: ${r.total} → ${r.band}`;
+      document.getElementById('disorderSymptoms').innerHTML = "<li>Persistent sadness</li><li>Loss of interest</li><li>Fatigue</li>";
+      document.getElementById('disorderCauses').innerHTML = "<li>Trauma</li><li>Genetics</li><li>Stress</li>";
+      document.getElementById('disorderCoping').innerHTML = "<li>Counseling</li><li>Exercise</li><li>Medication if needed</li>";
+    }
+    // popup message right after payment, before switching page
+    alert(`✅ Your score: ${r.total} → ${r.band}\n\nThis result was generated by the backend system.`);
+
+    showPage('disorderInfo');
+  });
+
+  // ---------- DOCTOR BOOKING ----------
+  document.getElementById('doctorForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const doctor = document.getElementById('doctor-select').value;
+    const bookingType = document.getElementById('booking-type').value;
+    const date = document.getElementById('session-date').value;
+    const time = document.getElementById('session-time').value;
+    const confirmation = document.getElementById('doctorConfirmation');
+
+    try {
+      await addDoc(collection(db, "bookings"), {
+        doctor, bookingType, sessionDate: date, sessionTime: time,
+        createdAt: serverTimestamp(), user: getCurrentUserInfo()
+      });
+
+      if (bookingType === "face") {
+        confirmation.textContent = "✅ Session booked successfully! Your session will be held at Al Noor Hospital, Dubai.";
+      } else {
+        confirmation.textContent = "✅ Session booked successfully! Your session link will be sent via Google Meet.";
+      }
+      confirmation.style.color = "green";
+      this.reset();
+    } catch (err) {
+      console.error(err);
+      confirmation.textContent = "❌ Could not book session.";
+      confirmation.style.color = "red";
+    }
+  });
+
+  // ---------- AI TEST SUBMITS (SAVE TO SEPARATE COLLECTIONS) ----------
+  document.getElementById('aiAnxietyForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const responses = {
+      social_interactions_1_5: parseInt(document.getElementById('a1').value,10),
+      mood_1_10: parseInt(document.getElementById('a2').value,10),
+      stress_1_10: parseInt(document.getElementById('a3').value,10),
+      negative_thoughts_1_10: parseInt(document.getElementById('a4').value,10),
+      concentration_1_10: parseInt(document.getElementById('a5').value,10),
+      loneliness_1_10: parseInt(document.getElementById('a6').value,10)
+    };
+    try {
+      await saveAIAnxiety(responses);
+    } catch (e) {
+      console.error(e);
+      alert("Could not save your AI Anxiety responses, but you can continue.");
+    }
+    showPage('aiAnxietyResult');
+  });
+
+  document.getElementById('aiDepressionForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const responses = {
+      social_interactions_1_5: parseInt(document.getElementById('d1').value,10),
+      mood_1_10: parseInt(document.getElementById('d2').value,10),
+      stress_1_10: parseInt(document.getElementById('d3').value,10),
+      negative_thoughts_1_10: parseInt(document.getElementById('d4').value,10),
+      concentration_1_10: parseInt(document.getElementById('d5').value,10),
+      loneliness_1_10: parseInt(document.getElementById('d6').value,10)
+    };
+    try {
+      await saveAIDepression(responses);
+    } catch (e) {
+      console.error(e);
+      alert("Could not save your AI Depression responses, but you can continue.");
+    }
+    showPage('aiDepressionResult');
+  });
+  
+
+  // ---------- Start ----------
+  showPage('home');
+
+  
+</script>
+<!-- === BACKEND CONNECTION SCRIPT === -->
+<script>
+
+// === CONNECT AI ANXIETY TEST TO BACKEND ===
+document.getElementById("aiAnxietyForm")?.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const payload = {
+    a1: document.getElementById("a1").value,
+    a2: document.getElementById("a2").value,
+    a3: document.getElementById("a3").value,
+    a4: document.getElementById("a4").value,
+    a5: document.getElementById("a5").value,
+    a6: document.getElementById("a6").value
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/predict/anxiety`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    alert(" Anxiety Result: " + data.prediction);
+  } catch (error) {
+    console.error("Error contacting backend:", error);
+    alert("⚠️ Unable to reach backend. Make sure Flask is running!");
+  }
+});
+
+// === CONNECT AI DEPRESSION TEST TO BACKEND ===
+document.getElementById("aiDepressionForm")?.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const payload = {
+    d1: document.getElementById("d1").value,
+    d2: document.getElementById("d2").value,
+    d3: document.getElementById("d3").value,
+    d4: document.getElementById("d4").value,
+    d5: document.getElementById("d5").value,
+    d6: document.getElementById("d6").value
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/predict/depression`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    alert("💭 Depression Result: " + data.prediction);
+  } catch (error) {
+    console.error("Error contacting backend:", error);
+    alert("⚠️ Unable to reach backend. Make sure Flask is running!");
+  }
+});
+</script>
+
+<!-- CHAT UI -->
+<div id="chat" class="container hidden">
+  <h2>PsychCheck Chat</h2>
+  <p>Ask about anxiety, stress, sleep, sadness, or focus. I'm here to help you feel better.</p>
+
+  <div id="chatWindow" style="height:300px; overflow:auto; border:2px solid #000; border-radius:10px; padding:10px; background:#f5f5f5;"></div>
+
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <input id="chatInput" type="text" placeholder="Type your message..." style="flex:1; padding:10px; border:2px solid #000; border-radius:6px;">
+    <button id="chatSend" style="padding:10px 16px; border:2px solid #000; border-radius:6px;">Send</button>
+  </div>
+</div>
+
+<script>
+const BACKEND_URL = "http://127.0.0.1:5000";
+const chatWin = document.getElementById("chatWindow");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+function addBubble(text, who = "you") {
+  const wrap = document.createElement("div");
+  wrap.style.margin = "8px 0";
+  const bubble = document.createElement("div");
+  bubble.textContent = text;
+  bubble.style.display = "inline-block";
+  bubble.style.padding = "8px 12px";
+  bubble.style.border = "2px solid #000";
+  bubble.style.borderRadius = "10px";
+  bubble.style.maxWidth = "80%";
+  bubble.style.background = who === "you" ? "#d1eaff" : "#e8ffe5";
+  bubble.style.fontSize = "15px";
+  wrap.style.textAlign = who === "you" ? "right" : "left";
+  wrap.appendChild(bubble);
+  chatWin.appendChild(wrap);
+  chatWin.scrollTop = chatWin.scrollHeight;
+}
+
+function showTyping() {
+  const typing = document.createElement("div");
+  typing.id = "typing";
+  typing.textContent = "Typing...";
+  typing.style.fontStyle = "italic";
+  typing.style.margin = "8px 0";
+  chatWin.appendChild(typing);
+  chatWin.scrollTop = chatWin.scrollHeight;
+}
+
+function removeTyping() {
+  const typing = document.getElementById("typing");
+  if (typing) typing.remove();
+}
+
+async function sendMessage() {
+  const msg = (chatInput.value || "").trim();
+  if (!msg) return;
+  addBubble(msg, "you");
+  chatInput.value = "";
+
+  showTyping();
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+
+    removeTyping();
+    addBubble(data.response || "…", "bot");
+  } catch (err) {
+    removeTyping();
+    addBubble("Unable to reach the server.", "bot");
+  }
+}
+
+chatSend.addEventListener("click", sendMessage);
+chatInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") sendMessage();
+});
+</script>
+
+<!-- AI PREDICTION INTRO PAGE -->
+
+<div id="aiPredictionIntro" class="container hidden">
+  <h2>AI-Based Emotional Analysis</h2>
+  <p style="max-width:700px; color:#333;">
+    This intelligent feature uses our AI model to interpret your written responses and estimate emotional states like 
+    <strong>anxiety</strong>, <strong>stress</strong>, or <strong>depression</strong>. 
+    It provides instant feedback — not a diagnosis — to help you reflect on your emotional wellbeing.
+  </p>
+
+  <div style="margin-top:25px;">
+    <button onclick="showPage('aiAnxietyPrediction')">AI Anxiety Prediction</button>
+    <button onclick="showPage('aiDepressionPrediction')" style="margin-left:15px;">AI Depression Prediction</button>
+  </div>
+
+  <p style="margin-top:25px; color:#555;">
+    💡 <em>Tip:</em> Choose the test that fits your concern. You can always go back to the home page for GAD-7 or PHQ-9 assessments.
+  </p>
+
+  <button onclick="showPage('home')" style="background:#3399ff; color:white; border:none; border-radius:8px; padding:10px 20px; cursor:pointer; font-weight:bold; margin-top:25px;">
+    ⬅ Back to Home
+  </button>
+</div>
+
+
+<!-- ========================= -->
+<!-- AI ANXIETY PREDICTION PAGE -->
+<!-- ========================= -->
+<div id="aiAnxietyPrediction" class="container hidden">
+  <h2>AI Anxiety Prediction</h2>
+  <p style="max-width:700px; color:#333;">
+    Answer these reflective questions — our AI will analyze your written responses to estimate your current anxiety level.
+  </p>
+
+  <form id="aiAnxietyPredictionForm" style="margin-top:25px;">
+    <div class="question-block">
+      <label>1. How have you been feeling emotionally in the past week?</label>
+      <textarea placeholder="Describe your emotions briefly..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>2. Have you been worrying excessively about things lately?</label>
+      <textarea placeholder="What’s been on your mind?" required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>3. How often do you feel tense or restless during the day?</label>
+      <textarea placeholder="Write about moments you feel uneasy..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>4. Have you noticed any physical signs of stress (e.g., fast heartbeat, trembling)?</label>
+      <textarea placeholder="Describe what you’ve experienced..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>5. How do you usually calm yourself when you’re overwhelmed?</label>
+      <textarea placeholder="Describe your coping methods..." required></textarea>
+    </div>
+
+    <button type="submit">Analyze with AI</button>
+  </form>
+
+  <!-- RESULT BOX -->
+  <div id="aiAnxietyResult" class="save-status" style="display:none; margin-top:25px; padding:18px; background:#eaf6ff; border-left:6px solid #4a90e2; border-radius:10px;">
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div id="aiAnxietyActions" style="display:none; margin-top:20px;">
+    <button onclick="showPage('home')" style="background:#4a90e2; color:white;">🏠 Go to Homepage</button>
+  </div>
+</div>
+
+
+<!-- =========================== -->
+<!-- AI DEPRESSION PREDICTION PAGE -->
+<!-- =========================== -->
+<div id="aiDepressionPrediction" class="container hidden">
+  <h2>AI Depression Prediction</h2>
+  <p style="max-width:700px; color:#333;">
+    Describe your recent mood, thoughts, and habits. Our AI will interpret your tone and wording to estimate possible low-mood patterns.
+  </p>
+
+  <form id="aiDepressionPredictionForm" style="margin-top:25px;">
+    <div class="question-block">
+      <label>1. How would you describe your overall mood recently?</label>
+      <textarea placeholder="Describe your general emotional state..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>2. Have you lost interest or motivation in things you usually enjoy?</label>
+      <textarea placeholder="Mention hobbies or daily routines..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>3. How is your sleep and energy level lately?</label>
+      <textarea placeholder="Describe how well you’ve been resting..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>4. Do you experience feelings of guilt, hopelessness, or worthlessness?</label>
+      <textarea placeholder="Write how you’ve been feeling about yourself..." required></textarea>
+    </div>
+
+    <div class="question-block">
+      <label>5. How are you coping with challenges or stress recently?</label>
+      <textarea placeholder="Explain your coping methods..." required></textarea>
+    </div>
+
+    <button type="submit">Analyze with AI</button>
+  </form>
+
+  <!-- RESULT BOX -->
+  <div id="aiDepressionResult" class="save-status" style="display:none; margin-top:25px; padding:18px; background:#eaf6ff; border-left:6px solid #4a90e2; border-radius:10px;">
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div id="aiDepressionActions" style="display:none; margin-top:20px;">
+    <button onclick="showPage('home')" style="background:#4a90e2; color:white;">🏠 Go to Homepage</button>
+  </div>
+</div>
+
+
+
+<script>
+async function setupAIPrediction(formId, resultId, actionsId) {
+  const form = document.getElementById(formId);
+  const resultDiv = document.getElementById(resultId);
+  const actionsDiv = document.getElementById(actionsId);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const answers = Array.from(form.querySelectorAll("textarea")).map(t => t.value.trim());
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = " Analyzing your responses...";
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/ai_predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers })
+      });
+      const data = await res.json();
+
+      // Show formatted result
+      resultDiv.innerHTML = `
+  ${data.prediction}<br>
+  <span style="color:#555;">Confidence: ${(data.confidence * 100).toFixed(0)}%</span><br><br>
+  <em style="color:#333;">${data.note}</em>
+`;
+
+      actionsDiv.style.display = "block";
+    } catch (err) {
+      resultDiv.textContent = "⚠️ Error connecting to AI service.";
+      console.error(err);
+    }
+  });
+}
+
+// Attach both forms
+setupAIPrediction("aiAnxietyPredictionForm", "aiAnxietyResult", "aiAnxietyActions");
+setupAIPrediction("aiDepressionPredictionForm", "aiDepressionResult", "aiDepressionActions");
+</script>
+
+</body>
+</html>
